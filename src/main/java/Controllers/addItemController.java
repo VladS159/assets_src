@@ -80,7 +80,7 @@ public class addItemController implements Initializable
         role=getRole();
         name=item_name.getText();
         description=item_description.getText();
-        if(name!=null && description!=null && imageToBeSaved!=null)
+        if(name!=null && description!=null && imageToBeSaved!=null && name.contains(" ")==false)
         {
             File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\photos\\"+username+"_"+name+".jpg");
 
@@ -120,6 +120,26 @@ public class addItemController implements Initializable
             {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @FXML
+    private void cancelButton(javafx.event.ActionEvent event)
+    {
+        try
+        {
+            if(role=="admin")
+            {
+                switchToLoggedInScreen_admin(event);
+            }
+
+            else if(role=="user")
+            {
+                switchToLoggedInScreen_user(event);
+            }
+        }catch(IOException e)
+        {
+            e.printStackTrace();
         }
     }
 

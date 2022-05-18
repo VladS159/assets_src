@@ -63,7 +63,7 @@ public class LoggedInController extends ListView<String> implements Initializabl
         return names;
     }
 
-    static class Cell extends ListCell<String>
+    class Cell extends ListCell<String>
     {
         HBox hbox = new HBox();
         Button btn = new Button("Hei");
@@ -76,8 +76,17 @@ public class LoggedInController extends ListView<String> implements Initializabl
 
             hbox.getChildren().addAll(label, pane ,btn);
             hbox.setHgrow(pane, Priority.ALWAYS);
-            //btn.setOnAction();
+            btn.setOnAction(e -> switchScene(e));
+        }
 
+        public void switchScene(javafx.event.ActionEvent event)
+        {
+            try {
+                switchToLogInScreen(event);
+            }catch(IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         public void updateItem(String name, boolean empty)

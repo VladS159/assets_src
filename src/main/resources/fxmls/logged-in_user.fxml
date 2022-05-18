@@ -10,10 +10,6 @@
       <AnchorPane prefHeight="38.0" prefWidth="600.0" style="-fx-background-color: #FED700;" />
       <AnchorPane layoutY="38.0" prefHeight="362.0" prefWidth="125.0" style="-fx-background-color: #FFE900;">
          <children>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="-5.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../photos/user.png" />
-               </image></ImageView>
             <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="-5.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../photos/user.png" />
@@ -26,10 +22,6 @@
                <image>
                   <Image url="@../photos/user.png" />
                </image></ImageView>
-            <Button layoutX="35.0" layoutY="20.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: #FED700; -fx-cursor: hand;" text="Profile">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
             <Button layoutX="35.0" layoutY="70.0" mnemonicParsing="false" onAction="#userItems" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: #FED700; -fx-cursor: hand;" text="My items">
                <font>
                   <Font size="14.0" />

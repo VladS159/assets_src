@@ -21,6 +21,7 @@ public class Main extends Application {
                 file.createNewFile();
             }
 
+            //System.out.println(System.getProperty("user.dir") + "\\src\\main\\resources\\all_items.txt");
             file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\all_items.txt");
             if (file.exists() == false) {
                 file.createNewFile();

@@ -1,2 +1,4 @@
-catelus,jucaus,vlad_catelus.jpg
-cainele meu,prietenos si pufos,vlad_cainele meu.jpg
+caine_pufos,caine pufos si dragut,vlad_caine_pufos.jpg
+sem,semsem,vlad_sem.jpg
+pisi,titi miti,vlad_pisi.jpg
+plus_minion,jucarie pentru copii,vlad_plus_minion.jpg
