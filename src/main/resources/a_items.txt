@@ -1,3 +1,2 @@
 pisica,pis pis,a_pisica.jpg
 caine,catelandru frumos,a_caine.jpg
-seminte,de floarea soarelui,a@admin.troc_seminte.jpg

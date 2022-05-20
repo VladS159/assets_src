@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -22,11 +23,15 @@ import java.beans.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import javafx.scene.control.TextField;
 
 import javafx.scene.control.Button;
+
+import static Controllers.Controller.username;
 
 public class LoggedInController extends ListView<String> implements Initializable
 {
@@ -38,6 +43,24 @@ public class LoggedInController extends ListView<String> implements Initializabl
     private static Parent root;
     private static Stage stage;
     private static Scene scene;
+
+    public void switchToSearchScreen_user(javafx.event.ActionEvent event) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmls/searched_user.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToSearchScreen_admin(javafx.event.ActionEvent event) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmls/searched_admin.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public String[] getNames()
     {
@@ -53,7 +76,7 @@ public class LoggedInController extends ListView<String> implements Initializabl
                 String data = reader.nextLine();
 
                 String[] tok = data.split(",");
-                names[i++]=tok[0]+", "+tok[1];
+                names[i++]=tok[0]+","+tok[1]+","+tok[2];
             }
         }catch(FileNotFoundException e)
         {
@@ -66,7 +89,10 @@ public class LoggedInController extends ListView<String> implements Initializabl
     class Cell extends ListCell<String>
     {
         HBox hbox = new HBox();
-        Button btn = new Button("Hei");
+        //Button btn = new Button("Hei");
+
+        ImageView img = new ImageView();
+
         Label label = new Label("");
         Pane pane = new Pane();
 
@@ -74,12 +100,12 @@ public class LoggedInController extends ListView<String> implements Initializabl
         {
             super();
 
-            hbox.getChildren().addAll(label, pane ,btn);
+            hbox.getChildren().addAll(img, label, pane);
             hbox.setHgrow(pane, Priority.ALWAYS);
-            btn.setOnAction(e -> switchScene(e));
+            //btn.setOnAction(e -> switchScene(e));
         }
 
-        public void switchScene(javafx.event.ActionEvent event)
+        /*public void switchScene(javafx.event.ActionEvent event)
         {
             try {
                 switchToLogInScreen(event);
@@ -87,17 +113,34 @@ public class LoggedInController extends ListView<String> implements Initializabl
             {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         public void updateItem(String name, boolean empty)
         {
+            URL url = null;
+
             super.updateItem(name, empty);
             setText(null);
             setGraphic(null);
 
             if(name != null && !empty)
             {
+                System.out.println(name+" :)");
+                String[] toks=name.split(",");
+
                 label.setText(name);
+                //System.out.println("."+toks[0]+".");
+
+                try {
+                    url= new File(System.getProperty("user.dir") + "\\photos\\"+toks[2]).toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+                javafx.scene.image.Image profile = new Image(url.toString(), 40, 40, false, false);
+                img.setImage(profile);
+
+                label.setText(toks[0]+","+toks[1]);
                 setGraphic(hbox);
             }
         }
@@ -109,10 +152,10 @@ public class LoggedInController extends ListView<String> implements Initializabl
 
         GridPane pane = new GridPane();
         Label name = new Label("h");
-        Button btn = new Button("Button");
+        //Button btn = new Button("Button");
 
         pane.add(name, 0, 0);
-        pane.add(btn, 0, 1);
+        //pane.add(btn, 0, 1);
 
         myListView.setCellFactory(param -> new Cell());
     }

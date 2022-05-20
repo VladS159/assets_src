@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,7 +70,7 @@ public class adminItemsController implements Initializable
                 String data = reader.nextLine();
 
                 String[] tok = data.split(",");
-                names[i++]=tok[0]+","+tok[1];
+                names[i++]=tok[0]+","+tok[1]+","+tok[2];
             }
         }catch(FileNotFoundException e)
         {
@@ -82,13 +85,14 @@ public class adminItemsController implements Initializable
         HBox hbox = new HBox();
         //Button btn = new Button("del");
         Label label = new Label("");
+        ImageView img = new ImageView();
         Pane pane = new Pane();
 
         public Cell()
         {
             super();
 
-            hbox.getChildren().addAll(label, pane);
+            hbox.getChildren().addAll(img ,label, pane);
             hbox.setHgrow(pane, Priority.ALWAYS);
             //btn.setOnAction();
 
@@ -96,20 +100,48 @@ public class adminItemsController implements Initializable
 
         public void updateItem(String name, boolean empty)
         {
+            URL url = null;
+
             super.updateItem(name, empty);
             setText(null);
             setGraphic(null);
 
             if(name != null && !empty)
             {
+                String[] toks=name.split(",");
+
                 label.setText(name);
+                //System.out.println("."+toks[0]+".");
+
+                try {
+                    url= new File(System.getProperty("user.dir") + "\\photos\\"+username+"_"+toks[0]+".jpg").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+                Image profile = new Image(url.toString(), 40, 40, false, false);
+                label.setText(name);
+                img.setImage(profile);
                 setGraphic(hbox);
             }
         }
     }
 
     public void initialize(URL arg0, ResourceBundle arg1) {
-        myListView2.getItems().addAll(items);
+
+        int i=0;
+        String[] listItems = new String[64];
+
+        for(String aux : items)
+        {
+            if(aux!=null)
+            {
+                String[] tok=aux.split(",");
+                listItems[i++]=tok[0]+","+tok[1];
+            }
+        }
+
+        myListView2.getItems().addAll(listItems);
 
         myListView2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -135,7 +167,6 @@ public class adminItemsController implements Initializable
     }
 
     public void deleteItem(javafx.event.ActionEvent event) {
-
         int i = 0;
         String[] newItems = new String[64];
         String[] newAllItems=new String[64];
@@ -147,9 +178,9 @@ public class adminItemsController implements Initializable
                     String[] tok = aux.split(",");
 
                     if (tok[0].equals(split[0]) == false) {
-                        newItems[i++] = tok[0] + "," + tok[1] + "," + username + "_" + tok[0] + ".jpg\n";
+                        newItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+"\n"; //username + "_" + tok[0] + ".jpg\n";
                     } else {
-                        Path imagesPath = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\photos\\" + username + "_" + tok[0] + ".jpg");
+                        Path imagesPath = Paths.get(System.getProperty("user.dir") + "\\photos\\" + tok[2]);//username + "_" + tok[0] + ".jpg");
 
                         try {
                             Files.delete(imagesPath);
@@ -167,7 +198,7 @@ public class adminItemsController implements Initializable
                     String[] tok = aux.split(",");
 
                     if (tok[0].equals(split[0]) == false) {
-                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + username + "_" + tok[0] + ".jpg\n";
+                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+"\n";//username + "_" + tok[0] + ".jpg\n";
                     }
                 }
 

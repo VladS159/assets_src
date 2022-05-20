@@ -63,13 +63,13 @@ public class addItemController implements Initializable
     {
         List<File> files = event.getDragboard().getFiles();
         Image img = new Image(new FileInputStream(files.get(0)));
-        System.out.println("am primit-o :D");
+        //System.out.println("am primit-o :D");
         imageView.setImage(img);
         imageToBeSaved = imageView.getImage();
-        System.out.println(imageToBeSaved==null);
+        //System.out.println(imageToBeSaved==null);
 
         String username=getUsername();
-        System.out.println(username);
+        //System.out.println(username);
     }
 
     @FXML
@@ -82,7 +82,9 @@ public class addItemController implements Initializable
         description=item_description.getText();
         if(name!=null && description!=null && imageToBeSaved!=null && name.contains(" ")==false)
         {
-            File file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\photos\\"+username+"_"+name+".jpg");
+            File file = new File(System.getProperty("user.dir") + "\\photos\\"+username+"_"+name+".jpg");
+
+            System.out.println(System.getProperty("user.dir") + "\\photos\\"+username+"_"+name+".jpg");
 
             try {
                 ImageIO.write(SwingFXUtils.fromFXImage(imageToBeSaved, null), "jpg", file);

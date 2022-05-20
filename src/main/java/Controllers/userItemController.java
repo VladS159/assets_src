@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.net.MalformedURLException;
 import java.nio.file.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -63,7 +64,7 @@ public class userItemController implements Initializable
                 String data = reader.nextLine();
 
                 String[] tok = data.split(",");
-                names[i++]=tok[0]+","+tok[1];
+                names[i++]=tok[0]+","+tok[1]+","+tok[2];
             }
         }catch(FileNotFoundException e)
         {
@@ -95,6 +96,8 @@ public class userItemController implements Initializable
 
         public void updateItem(String name, boolean empty)
         {
+            URL url = null;
+
             super.updateItem(name, empty);
             setText(null);
             setGraphic(null);
@@ -105,8 +108,14 @@ public class userItemController implements Initializable
 
                 label.setText(name);
                 //System.out.println("."+toks[0]+".");
-                System.out.println("photos/" +username+"_"+toks[0]+".jpg");
-                Image profile = new Image("photos/" +username+"_"+toks[0]+".jpg", 40, 40, false, false);
+
+                try {
+                    url= new File(System.getProperty("user.dir") + "\\photos\\"+username+"_"+toks[0]+".jpg").toURI().toURL();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+                Image profile = new Image(url.toString(), 40, 40, false, false);
                 img.setImage(profile);
                 setGraphic(hbox);
             }
@@ -114,7 +123,20 @@ public class userItemController implements Initializable
     }
 
     public void initialize(URL arg0, ResourceBundle arg1) {
-        myListView2.getItems().addAll(items);
+
+        int i=0;
+        String[] listItems = new String[64];
+
+        for(String aux : items)
+        {
+            if(aux!=null)
+            {
+                String[] tok=aux.split(",");
+                listItems[i++]=tok[0]+","+tok[1];
+            }
+        }
+
+        myListView2.getItems().addAll(listItems);
 
         myListView2.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -150,9 +172,9 @@ public class userItemController implements Initializable
                     String[] tok = aux.split(",");
 
                     if (tok[0].equals(split[0]) == false) {
-                        newItems[i++] = tok[0] + "," + tok[1] + "," + username + "_" + tok[0] + ".jpg\n";
+                        newItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+"\n";//username + "_" + tok[0] + ".jpg\n";
                     } else {
-                        Path imagesPath = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\photos\\" + username + "_" + tok[0] + ".jpg");
+                        Path imagesPath = Paths.get(System.getProperty("user.dir") + "\\photos\\"+tok[2]);// + username + "_" + tok[0] + ".jpg");
 
                         try {
                             Files.delete(imagesPath);
@@ -170,7 +192,7 @@ public class userItemController implements Initializable
                     String[] tok = aux.split(",");
 
                     if (tok[0].equals(split[0]) == false) {
-                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + username + "_" + tok[0] + ".jpg\n";
+                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+ "\n";
                     }
                 }
 
