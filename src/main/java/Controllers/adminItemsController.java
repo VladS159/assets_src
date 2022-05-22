@@ -171,13 +171,13 @@ public class adminItemsController implements Initializable
         String[] newItems = new String[64];
         String[] newAllItems=new String[64];
 
-        if (currentItem.equals("[null]")==false) {
+        if (currentItem!=null) {
             String username = getUsername();
             for (String aux : items) {
                 if (aux != null) {
                     String[] tok = aux.split(",");
 
-                    if (tok[0].equals(split[0]) == false) {
+                    if (tok[0].equals(split[0]) == false && tok[1].equals(split[1])==false) {
                         newItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+"\n"; //username + "_" + tok[0] + ".jpg\n";
                     } else {
                         Path imagesPath = Paths.get(System.getProperty("user.dir") + "\\photos\\" + tok[2]);//username + "_" + tok[0] + ".jpg");
@@ -193,15 +193,16 @@ public class adminItemsController implements Initializable
 
             i = 0;
 
+
+
             for (String aux : allItems) {
                 if (aux != null) {
                     String[] tok = aux.split(",");
 
-                    if (tok[0].equals(split[0]) == false) {
-                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+"\n";//username + "_" + tok[0] + ".jpg\n";
+                    if(tok[0].equals(split[0]) == false && tok[1].equals(split[1])==false) {
+                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+"\n";
                     }
                 }
-
             }
 
             try {
@@ -262,6 +263,15 @@ public class adminItemsController implements Initializable
     public void adminItems(javafx.event.ActionEvent event) throws IOException
     {
         root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmls/admin-items.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToUnapprovedItemScreen(javafx.event.ActionEvent event) throws IOException
+    {
+        root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmls/approveItems.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

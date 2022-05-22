@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.adminItemsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.unapprovedItemController">
     <children>
         <AnchorPane prefHeight="38.0" prefWidth="600.0" style="-fx-background-color: #FED700;" />
         <AnchorPane layoutY="38.0" prefHeight="362.0" prefWidth="125.0" style="-fx-background-color: #FFE900;">
@@ -33,7 +33,7 @@
                     <font>
                         <Font size="14.0" />
                     </font></Button>
-                <Button layoutX="35.0" layoutY="170.0" mnemonicParsing="false" onAction="#switchToUnapprovedItemScreen" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: #FED700; -fx-cursor: hand;" text="Waiting List">
+                <Button layoutX="35.0" layoutY="70.0" mnemonicParsing="false" onAction="#adminItems" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: #FED700; -fx-cursor: hand;" text="My items">
                     <font>
                         <Font size="13.0" />
                     </font></Button>
@@ -49,12 +49,13 @@
             </ImageView>
             </children>
         </AnchorPane>
-        <ListView fx:id="myListView2" layoutX="125.0" layoutY="95.0" prefHeight="305.0" prefWidth="475.0" />
-      <Label layoutX="149.0" layoutY="47.0" prefHeight="38.0" prefWidth="427.0" text="Your items are:">
+        <ListView fx:id="myListView4" layoutX="125.0" layoutY="95.0" prefHeight="305.0" prefWidth="475.0" />
+      <Label layoutX="149.0" layoutY="47.0" prefHeight="38.0" prefWidth="427.0" text="Unnaproved items:">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Button layoutX="514.0" layoutY="51.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="31.0" prefWidth="62.0" text="Delete" />
+      <Button layoutX="514.0" layoutY="51.0" mnemonicParsing="false" onAction="#rejectItem" prefHeight="31.0" prefWidth="62.0" text="Reject" />
+      <Button layoutX="441.0" layoutY="51.0" mnemonicParsing="false" onAction="#approveItem" prefHeight="31.0" prefWidth="62.0" text="Approve" />
     </children>
 </AnchorPane>

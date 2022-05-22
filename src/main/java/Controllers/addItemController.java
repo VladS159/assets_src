@@ -80,11 +80,11 @@ public class addItemController implements Initializable
         role=getRole();
         name=item_name.getText();
         description=item_description.getText();
-        if(name!=null && description!=null && imageToBeSaved!=null && name.contains(" ")==false)
+        if(name.equals("")==false && description.equals("")==false && imageToBeSaved!=null && name.contains(" ")==false && name.contains(",")==false && description.contains(",")==false)
         {
             File file = new File(System.getProperty("user.dir") + "\\photos\\"+username+"_"+name+".jpg");
 
-            System.out.println(System.getProperty("user.dir") + "\\photos\\"+username+"_"+name+".jpg");
+            //System.out.println(System.getProperty("user.dir") + "\\photos\\"+username+"_"+name+".jpg");
 
             try {
                 ImageIO.write(SwingFXUtils.fromFXImage(imageToBeSaved, null), "jpg", file);
@@ -104,7 +104,14 @@ public class addItemController implements Initializable
                 writer.write(name+","+description+","+username+"_"+name+".jpg\n");
                 writer.close();
 
-                file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\all_items.txt");
+                if(role=="user") {
+                    file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\unapproved_items.txt");
+                }
+
+                else
+                {
+                    file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\all_items.txt");
+                }
                 writer = new FileWriter(file, true);
                 writer.write(name+","+description+","+username+"_"+name+".jpg\n");
                 writer.close();

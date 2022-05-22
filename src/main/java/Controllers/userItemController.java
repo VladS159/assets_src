@@ -144,9 +144,10 @@ public class userItemController implements Initializable
                 currentItem = (myListView2.getSelectionModel().getSelectedItems()).toString();
 
                 if(currentItem.equals("[null]")==false) {
+                    //System.out.println(currentItem);
                     split = currentItem.split(",");
                     split[0] = split[0].substring(1);
-                    split[1] = split[1].substring(1, split[1].length() - 1);
+                    split[1] = split[1].substring(0, split[1].length() - 1);
                 }
             }
         });
@@ -165,7 +166,7 @@ public class userItemController implements Initializable
         String[] newItems = new String[64];
         String[] newAllItems=new String[64];
 
-        if (currentItem.equals("[null]")==false) {
+        if (currentItem!=null) {
             String username = getUsername();
             for (String aux : items) {
                 if (aux != null) {
@@ -187,15 +188,44 @@ public class userItemController implements Initializable
 
             i = 0;
 
-            for (String aux : allItems) {
-                if (aux != null) {
-                    String[] tok = aux.split(",");
-
-                    if (tok[0].equals(split[0]) == false) {
-                        newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2]+ "\n";
+            int ok=0;
+            String toDel=split[0]+","+split[1];
+            //de aici trebuie sa schimb
+            for(String aux : allItems)
+            {
+                if(aux!=null)
+                {
+                    if(aux.contains(toDel))
+                    {
+                        ok=1;
                     }
                 }
+            }
 
+            if(ok==1) {
+                for (String aux : allItems) {
+                    if (aux != null) {
+                        String[] tok = aux.split(",");
+
+                        if (tok[0].equals(split[0]) == false) {
+                            newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2] + "\n";
+                        }
+                    }
+                }
+            }
+
+            else
+            {
+                allItems=getNames(System.getProperty("user.dir") + "\\src\\main\\resources\\unapproved_items.txt");
+                for (String aux : allItems) {
+                    if (aux != null) {
+                        String[] tok = aux.split(",");
+
+                        if (tok[0].equals(split[0]) == false) {
+                            newAllItems[i++] = tok[0] + "," + tok[1] + "," + tok[2] + "\n";
+                        }
+                    }
+                }
             }
 
             try {
@@ -209,7 +239,16 @@ public class userItemController implements Initializable
                 }
                 writer.close();
 
-                File file2 = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\all_items.txt");
+                File file2;
+
+                if(ok==1) {
+                    file2 = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\all_items.txt");
+                }
+
+                else
+                {
+                    file2 = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\unapproved_items.txt");
+                }
                 FileWriter writer2 = new FileWriter(file2);
 
                 for (String aux : newAllItems) {
@@ -261,5 +300,4 @@ public class userItemController implements Initializable
         stage.setScene(scene);
         stage.show();
     }
-
 }

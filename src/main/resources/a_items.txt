@@ -1,2 +1,0 @@
-pisica,pis pis,a_pisica.jpg
-caine,catelandru frumos,a_caine.jpg

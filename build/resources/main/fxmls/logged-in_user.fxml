@@ -39,9 +39,19 @@
          </children>
       </AnchorPane>
       <ListView fx:id="myListView" layoutX="125.0" layoutY="95.0" prefHeight="305.0" prefWidth="475.0" />
-      <Button layoutX="141.0" layoutY="53.0" mnemonicParsing="false" onAction="#switchToSearchScreen_user" prefHeight="25.0" prefWidth="443.0" text="Search item by keyword">
+      <Button layoutX="428.0" layoutY="53.0" mnemonicParsing="false" onAction="#switchToSearchScreen_user" prefHeight="27.0" prefWidth="156.0" text="Search item by keyword">
          <font>
             <Font size="13.0" />
          </font></Button>
+      <Button layoutX="144.0" layoutY="53.0" mnemonicParsing="false" onAction="#likeItems" prefHeight="27.0" prefWidth="82.0" text="Like item">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="235.0" layoutY="53.0" mnemonicParsing="false" onAction="#dislikeItem" prefHeight="27.0" prefWidth="88.0" text="Dislike item">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

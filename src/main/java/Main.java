@@ -26,6 +26,12 @@ public class Main extends Application {
             if (file.exists() == false) {
                 file.createNewFile();
             }
+
+            file = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\unapproved_items.txt");
+            if (file.exists() == false) {
+                file.createNewFile();
+            }
+
         }catch(IOException e)
         {
             e.printStackTrace();

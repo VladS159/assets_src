@@ -120,6 +120,9 @@ public class SignUpController
             try {
                 File newFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\"+username+"_items.txt");
                 newFile.createNewFile();
+
+                File newFile2 = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\"+username+"_likedItems.txt");
+                newFile2.createNewFile();
             }catch(IOException e)
             {
                 e.printStackTrace();
